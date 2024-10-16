@@ -15,7 +15,12 @@ const io = new Server(server, {
         credentials: true // Optional, include if you are using cookies or need credentials
     }
 });
-connectToOpcUaClient();
+
+app.get("/ConnectOPC", (req, res) => {
+    connectToOpcUaClient();
+});
+
+
 app.use(express.json());
 app.use(cors({
     origin: MyFrontend, // Same as above
