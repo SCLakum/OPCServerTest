@@ -5,6 +5,7 @@ const { Server } = require('socket.io');
 const cors = require('cors');
 const MyFrontend = "https://scada-online-test-frontend.vercel.app"; // Replace with your hosted frontend URL
 const { connectToOpcUaClient, MyScada } = require("./modules/opcUa");
+const ConnectSQL = require("./modules/sqlDB");
 
 const port = 3000;
 const app = express();
@@ -18,7 +19,11 @@ const io = new Server(server, {
 });
 
 // Connect to OPC UA client
-connectToOpcUaClient();
+ConnectSQL();
+// Call syncToMongoDB initially and set an interval to keep checking
+setInterval(ConnectSQL, 10000); // Check every 10 seconds
+
+// connectToOpcUaClient();
 
 // Middleware setup
 app.use(express.json());
