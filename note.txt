@@ -1,0 +1,29 @@
+******* RRunBackend.bat *******
+@echo off
+cd /d E:\Temp\OPC UA Client\02 Backend
+node index.js
+
+timeout /t 5 /nobreak > NUL
+ssh -R myScadaTest:80:localhost:3000 serveo.net
+
+pause
+
+
+******* StartServer.vbs *******
+Set WshShell = CreateObject("WScript.Shell")
+WshShell.Run "D:\01Script\RunBackend.bat", 0, False
+
+
+******* StopBackend.bat *******
+@echo off
+:: Check for administrator permissions
+net session >nul 2>&1
+if %errorLevel% NEQ 0 (
+    echo Requesting administrative privileges...
+    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+    exit /B
+)
+
+echo Stopping all Node.js processes...
+taskkill /F /IM node.exe
+

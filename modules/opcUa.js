@@ -29,7 +29,7 @@ const options = {
 };
 
 const client = OPCUAClient.create(options);
-const endpointUrl = "opc.tcp://122.176.231.224:48010";
+const endpointUrl = "opc.tcp://sunil:48010";
 
 async function connectToOpcUaClient() {
     try {
